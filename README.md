@@ -36,7 +36,47 @@ To ensure high performance, security, and stability, the project implements seve
 ## ⚙️ Installation Instructions
 
 ### Step 1: Clone & Install Dependencies
-1. Clone this repository:
+1. **Clone this repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/messenger-transcription-bot.git](https://github.com/YOUR_USERNAME/messenger-transcription-bot.git)
+   git clone https://github.com/YOUR_USERNAME/messenger-transcription-bot.git
    cd messenger-transcription-bot
+   ```
+2. **Install Python packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Install FFmpeg (Crucial!):**
+   If using Anaconda, run:
+   ```bash
+   conda install -c conda-forge ffmpeg
+   ```
+   Otherwise, download it from the official site and add it to your System PATH.
+
+### Step 2: Environment Configuration
+Create a `.env` file in the root directory and populate it with your keys (refer to `.env.example`):
+```text
+PAGE_ACCESS_TOKEN=your_facebook_page_access_token
+WIT_ACCESS_TOKEN=your_wit_ai_server_token
+VERIFY_TOKEN=your_custom_webhook_verify_password
+```
+
+### Step 3: Run the Bot
+1. **Start Ngrok:** Open a terminal and run `ngrok http 5000`. Copy the generated `https` Forwarding URL.
+2. **Setup Meta Webhook:** Go to your Meta App Dashboard -> Messenger -> API Setup. Paste your Ngrok URL followed by `/webhook` (e.g., `https://abc-123.ngrok-free.app/webhook`) and enter your Verify Token.
+3. **Start Flask:** Open another terminal and run `python app.py`.
+
+## 🎮 How to Use?
+* **Text the Bot:** Send a standard text message to your Facebook Page. The bot will reply with instructions.
+* **Send a Voice Note:** Record and send a voice message. The bot will acknowledge receipt, process the audio, and reply with the `📝 Transcription`.
+
+## 🐛 Troubleshooting
+
+* **Error: `[WinError 2] Nie można odnaleźć określonego pliku` (File not found)**
+  * *Cause:* `pydub` cannot find FFmpeg on your system.
+  * *Fix:* Ensure FFmpeg is installed and correctly added to your system's PATH variables, or install it via your package manager (`conda install -c conda-forge ffmpeg`).
+* **Facebook Webhook Verification Fails / Red Cross in Meta Dashboard**
+  * *Cause:* Mismatch in `VERIFY_TOKEN` or your Flask server is not running.
+  * *Fix:* Double-check your `.env` file and ensure `app.py` is actively running on port `5000` before clicking "Verify and Save" on Facebook.
+* **Bot stops responding after a PC restart**
+  * *Cause:* Ngrok free tier changes the URL every time it launches.
+  * *Fix:* You must update the Callback URL in the Meta Developer portal with your new Ngrok link.
