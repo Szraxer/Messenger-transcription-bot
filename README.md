@@ -38,7 +38,7 @@ To ensure high performance, security, and stability, the project implements seve
 ### Step 1: Clone & Install Dependencies
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/messenger-transcription-bot.git
+   git clone https://github.com/Szraxer/Messenger-transcription-bot.git
    cd messenger-transcription-bot
    ```
 2. **Install Python packages:**
